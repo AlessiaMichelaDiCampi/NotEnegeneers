@@ -56,13 +56,13 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         etCap = findViewById(R.id.etCap);//required
 
+
         etName =findViewById(R.id.Name);
         etSurname = findViewById(R.id.Surname);
         etState =findViewById(R.id.State);//required
         etAddress = findViewById(R.id.Address);//required
         etAddressNumber = findViewById(R.id.nAddress);//required
         dateofBird=findViewById(R.id.DateBirth);
-
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         String state = etState.getText().toString();
         String address = etAddress.getText().toString();
         String addressNumber = etAddressNumber.getText().toString();
-        String dateBirth = dateofBird.getDayOfMonth()+"/"+((dateofBird.getMonth())<10?"0":"")+(dateofBird.getMonth()+1)+"/"+dateofBird.getYear();
+        String dateBirth = ((dateofBird.getDayOfMonth())<10?"0":"")+(dateofBird.getDayOfMonth())+"-"+((dateofBird.getMonth())<10?"0":"")+(dateofBird.getMonth()+1)+"-"+dateofBird.getYear();
 
 
 
@@ -110,37 +110,33 @@ public class RegisterActivity extends AppCompatActivity {
             etState.setError("Cap cannot be empty");
             etState.requestFocus();
         }else{
+
                 mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            //crea tabella user con cap
-                            Map<String,Object> users = new HashMap<>();
-                            users.put("email",email);
-                            users.put("name",name);
-                            users.put("surname",surname);
-                            users.put("state",state);
-                            users.put("CAP",Cap);
-                            users.put("address",address);
-                            users.put("address_number",addressNumber);
-                            users.put("date_birth",dateBirth);
-                            //users.put("CAP",Cap); //data
 
-                            firestore.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                            User u= new User(email,name,surname,Cap,address,addressNumber,dateBirth,state);
+                            Toast.makeText(RegisterActivity.this, task.getResult().getUser().getUid(), Toast.LENGTH_SHORT).show();
+
+
+                            firestore.collection("users").document(task.getResult().getUser().getUid()).set(u.getMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(DocumentReference documentReference) {
+                                public void onSuccess(Void aVoid) {
                                     Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(),"Failure", Toast.LENGTH_LONG).show(); //se non va a buon fine mostro questo
+                                    Toast.makeText(getApplicationContext(),"Failure"+e.getMessage(), Toast.LENGTH_LONG).show(); //se non va a buon fine mostro questo
                                 }
                             });
 
                         }else{
                             Toast.makeText(RegisterActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
