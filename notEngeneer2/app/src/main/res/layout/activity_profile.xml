@@ -12,7 +12,7 @@
         android:layout_height="699dp"
         android:orientation="vertical"
         android:padding="24dp"
-        tools:context=".Profile"
+        tools:context=".activities.ProfileActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="1dp"
         tools:ignore="MissingConstraints">

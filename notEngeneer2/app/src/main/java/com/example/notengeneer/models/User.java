@@ -1,6 +1,4 @@
-package com.example.notengeneer;
-
-import android.util.Log;
+package com.example.notengeneer.models;
 
 import java.util.HashMap;
 import java.util.Map;

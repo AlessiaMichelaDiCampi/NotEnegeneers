@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.notengeneer.App;
+import com.example.notengeneer.fragment.EventFragment;
+import com.example.notengeneer.fragment.HomeFragment;
+import com.example.notengeneer.R;
+import com.example.notengeneer.fragment.RequestFragment;
+import com.example.notengeneer.fragment.ShopFragment;
 import com.example.notengeneer.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,16 +28,23 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     Button profilebutt;
 
+    App app = App.getInstance();
+
+    FirebaseUser user = app.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (user == null)
+            startActivity(new Intent(this, LoginActivity.class));
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         profilebutt =  findViewById(R.id.profButt);
         profilebutt.setOnClickListener(view ->{
-            startActivity(new Intent(MainActivity.this, Profile.class));
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         });
 
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
