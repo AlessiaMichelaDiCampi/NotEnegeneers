@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     App app = App.getInstance();
 
-    FirebaseAuth mAuth = app.mAuth;
+    FirebaseAuth mAuth = app.getfbAuth();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    Button profilebutt;
 
     App app = App.getInstance();
 
@@ -41,11 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        profilebutt =  findViewById(R.id.profButt);
-        profilebutt.setOnClickListener(view ->{
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-        });
 
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
 
@@ -76,13 +70,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        replaceFragment(new HomeFragment());
+
     }
 
     private void replaceFragment(Fragment fragment){    //per navigare con la dashboard tra i vari fragment
         FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout,fragment)
+                .setReorderingAllowed(true)
+                .addToBackStack("replacement")
+                .commit();
 
     }
 
