@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.notengeneer.R;
+import com.example.notengeneer.activities.MainActivity;
+import com.example.notengeneer.activities.ProfileActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +28,9 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Button profileButt;
+
+    Button profilebutt;
+    View view;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -61,7 +67,14 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        profilebutt =  view.findViewById(R.id.profButt);
+        profilebutt.setOnClickListener(view ->{
+            startActivity(new Intent(getActivity(), ProfileActivity.class));
+        });
+
+        return view;
     }
 }

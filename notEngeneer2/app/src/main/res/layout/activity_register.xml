@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:context=".RegisterActivity"
+        tools:context=".activities.RegisterActivity"
         tools:layout_editor_absoluteX="0dp">
 
 

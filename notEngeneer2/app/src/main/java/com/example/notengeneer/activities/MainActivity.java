@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,26 +13,33 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.notengeneer.App;
+import com.example.notengeneer.fragment.EventFragment;
+import com.example.notengeneer.fragment.HomeFragment;
+import com.example.notengeneer.R;
+import com.example.notengeneer.fragment.RequestFragment;
+import com.example.notengeneer.fragment.ShopFragment;
 import com.example.notengeneer.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    Button profilebutt;
 
+    App app = App.getInstance();
+
+    FirebaseUser user = app.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (user == null)
+            startActivity(new Intent(this, LoginActivity.class));
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        profilebutt =  findViewById(R.id.profButt);
-        profilebutt.setOnClickListener(view ->{
-            startActivity(new Intent(MainActivity.this, Profile.class));
-        });
 
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
 
@@ -63,13 +70,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        replaceFragment(new HomeFragment());
+
     }
 
     private void replaceFragment(Fragment fragment){    //per navigare con la dashboard tra i vari fragment
         FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout,fragment)
+                .setReorderingAllowed(true)
+                .addToBackStack("replacement")
+                .commit();
 
     }
 

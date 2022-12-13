@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_200"
-    tools:context=".HomeFragment">
+    tools:context=".fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -14,10 +14,13 @@
         android:layout_gravity="center"
         android:text="HOME" />
 
+
     <Button
-        android:id="@+id/profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile" />
+        android:id="@+id/profButt"
+        android:layout_width="146dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="563dp"
+        android:text="Profile"/>
 
 </FrameLayout>

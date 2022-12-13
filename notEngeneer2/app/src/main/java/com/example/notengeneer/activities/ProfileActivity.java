@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,29 +8,23 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notengeneer.R;
+import com.example.notengeneer.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.notengeneer.databinding.ActivityProfileBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
-
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
     TextInputEditText etRegEmail;
@@ -98,15 +92,15 @@ public class Profile extends AppCompatActivity {
                         Log.d("ANNO NASCITA",u.getYear());*/
                         dateofBird.updateDate(u.getYear(),u.getMonth()-1,u.getDay());
 
-                        Toast.makeText(Profile.this, document.getData().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, document.getData().toString(), Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d("TAG", "No such document");
-                        Toast.makeText(Profile.this,"no such", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this,"no such", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
-                    Toast.makeText(Profile.this, "get failed with"+task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "get failed with"+task.getException(), Toast.LENGTH_SHORT).show();
 
                 }
             }
