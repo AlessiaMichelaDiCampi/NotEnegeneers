@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.models;
 
 public class Event {
 

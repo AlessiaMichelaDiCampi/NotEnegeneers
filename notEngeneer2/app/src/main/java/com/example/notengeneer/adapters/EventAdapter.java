@@ -1,4 +1,4 @@
-package com.example.notengeneer;
+package com.example.notengeneer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,14 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notengeneer.models.Event;
+import com.example.notengeneer.R;
+
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     Context context;
     ArrayList<Event> list;
 
-    public MyAdapter(Context context, ArrayList<Event> list) {
+    public EventAdapter(Context context, ArrayList<Event> list) {
         this.context = context;
         this.list = list;
     }

@@ -1,20 +1,32 @@
 package com.example.notengeneer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import com.example.notengeneer.models.Event;
+import com.example.notengeneer.activities.EventaddActivity;
+import com.example.notengeneer.adapters.EventAdapter;
 import com.example.notengeneer.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EventFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 import java.util.ArrayList;
 
 
@@ -25,7 +37,7 @@ public class EventFragment extends Fragment {
     FirebaseFirestore db;
     String TAG = "DocSnippets";
     DatabaseReference database;
-    MyAdapter myAdapter;
+    EventAdapter eventAdapter;
     ArrayList<Event> list;
 
     @Override
@@ -55,8 +67,8 @@ public class EventFragment extends Fragment {
 
         list = new ArrayList<>();
 
-        myAdapter = new MyAdapter(getContext(), list);
-        recyclerview.setAdapter(myAdapter);
+        eventAdapter = new EventAdapter(getContext(), list);
+        recyclerview.setAdapter(eventAdapter);
 
         db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -71,7 +83,7 @@ public class EventFragment extends Fragment {
                                 newEvent.setFinishDate(document.getString("dateEnd"));
                                 newEvent.setPosition(document.getString("position"));
                                 list.add(newEvent);
-                                myAdapter.notifyDataSetChanged();
+                                eventAdapter.notifyDataSetChanged();
                                 Log.d(TAG, document.getId() + " => " + document.get("finish_date"));
                             }
                         } else {
